@@ -1,1 +1,891 @@
-# CTDL-OT
+# TỔNG HỢP 12 THUẬT TOÁN DANH SÁCH LIÊN KẾT ĐƠN
+
+---
+
+# **PHẦN 1: CÁC PHÉP CHÈN (INSERT)**
+
+## **THUẬT TOÁN 1: CHÈN PHẦN TỬ VÀO ĐẦU DANH SÁCH**
+
+### **1. Tên thuật toán**
+Chèn phần tử vào đầu danh sách liên kết đơn (Insert at Head)
+
+### **2. Ý tưởng**
+- Tạo node mới chứa giá trị x
+- Liên kết node mới với node đầu hiện tại
+- Cập nhật head trỏ tới node mới
+
+### **3. Dữ liệu vào (Input)**
+- head: con trỏ tới node đầu danh sách (có thể NULL)
+- x: giá trị cần chèn
+
+### **4. Dữ liệu ra (Output)**
+- Danh sách được cập nhật, head trỏ tới node mới
+
+### **5. Các bước**
+
+**Bước 1:** Tạo node mới với giá trị x
+```
+p = createNode(x)
+```
+
+**Bước 2:** Liên kết node mới với node đầu hiện tại
+```
+p->next = head
+```
+
+**Bước 3:** Cập nhật head trỏ tới node mới
+```
+head = p
+```
+
+### **6. Ví dụ**
+
+**Input:** head: 2 → 3 → 5, x = 1
+
+**Output:** head: 1 → 2 → 3 → 5
+
+### **7. Mã C++**
+
+```cpp
+void insertHead(Node* &head, int x){
+    Node* p = createNode(x);
+    p->next = head;
+    head = p;
+}
+```
+
+---
+
+## **THUẬT TOÁN 2: CHÈN PHẦN TỬ VÀO CUỐI DANH SÁCH**
+
+### **1. Tên thuật toán**
+Chèn phần tử vào cuối danh sách liên kết đơn (Insert at Tail)
+
+### **2. Ý tưởng**
+- Tạo node mới chứa giá trị x
+- Nếu danh sách rỗng, đặt node mới làm head
+- Nếu không, duyệt tới node cuối rồi liên kết thêm node mới
+
+### **3. Dữ liệu vào (Input)**
+- head: con trỏ tới node đầu danh sách (có thể NULL)
+- x: giá trị cần chèn
+
+### **4. Dữ liệu ra (Output)**
+- Danh sách được cập nhật, node mới ở cuối
+
+### **5. Các bước**
+
+**Bước 1:** Tạo node mới với giá trị x
+
+**Bước 2:** Kiểm tra danh sách rỗng → head = p, return
+
+**Bước 3:** Duyệt tới node cuối
+
+**Bước 4:** Liên kết node mới vào cuối
+
+### **6. Ví dụ**
+
+**Input:** head: 1 → 2 → 3, x = 5
+
+**Output:** head: 1 → 2 → 3 → 5
+
+### **7. Mã C++**
+
+```cpp
+void insertTail(Node* &head, int x){
+    Node* p = createNode(x);
+    
+    if(head == nullptr){
+        head = p;
+        return;
+    }
+
+    Node* temp = head;
+    while (temp->next != nullptr){
+        temp = temp->next;
+    }
+    temp->next = p;
+}
+```
+
+---
+
+## **THUẬT TOÁN 3: CHÈN PHẦN TỬ TẠI VỊ TRÍ K**
+
+### **1. Tên thuật toán**
+Chèn phần tử vào vị trí k trong danh sách liên kết đơn
+
+### **2. Ý tưởng**
+- Kiểm tra vị trí hợp lệ
+- Nếu k=1 chèn vào đầu
+- Nếu k>1 duyệt tới node (k-1) rồi chèn sau nó
+
+### **3. Dữ liệu vào (Input)**
+- head: con trỏ tới node đầu
+- value: giá trị cần chèn
+- k: vị trí chèn (1 ≤ k ≤ độ dài+1)
+
+### **4. Dữ liệu ra (Output)**
+- Node mới được chèn tại vị trí k
+
+### **5. Các bước**
+
+**Bước 1:** Kiểm tra k hợp lệ (k ≥ 1)
+
+**Bước 2:** Kiểm tra nếu danh sách rỗng mà k > 1 → từ chối
+
+**Bước 3:** Tạo node mới với value
+
+**Bước 4:** Nếu k = 1, chèn vào đầu
+
+**Bước 5:** Nếu k > 1, duyệt tìm node (k-1)
+
+**Bước 6:** Kiểm tra node (k) có tồn tại không
+
+**Bước 7:** Chèn node mới vào sau node (k-1)
+
+### **6. Ví dụ**
+
+**Input:** head: 1 → 3 → 5, value = 2, k = 2
+
+**Output:** head: 1 → 2 → 3 → 5
+
+### **7. Mã C++**
+
+```cpp
+void insertAt(Node* &head, int value, int k) {
+    if (k < 1) {
+        cout << "Vị trí không hợp lệ!";
+        return;
+    }
+
+    if (head == nullptr && k > 1) {
+        cout << "Vị trí không hợp lệ!";
+        return;
+    }
+
+    Node* p = createNode(value);
+
+    if (k == 1) {
+        p->next = head;
+        head = p;
+        return;
+    }
+
+    Node* current = head;
+    int count = 1;
+
+    while (current->next != nullptr && count < k - 1) {
+        current = current->next;
+        count++;
+    }
+
+    if (current->next == nullptr && count < k - 1) {
+        cout << "Vị trí không hợp lệ!";
+        delete p;
+        return;
+    }
+
+    p->next = current->next;
+    current->next = p;
+}
+```
+
+---
+
+# **PHẦN 2: CÁC PHÉP XÓA (DELETE)**
+
+## **THUẬT TOÁN 4: XÓA NODE ĐẦU DANH SÁCH**
+
+### **1. Tên thuật toán**
+Xóa node đầu danh sách liên kết đơn
+
+### **2. Ý tưởng**
+- Lưu con trỏ node đầu
+- Cập nhật head trỏ tới node thứ 2
+- Giải phóng bộ nhớ node đầu cũ
+
+### **3. Dữ liệu vào (Input)**
+- head: con trỏ tới node đầu
+
+### **4. Dữ liệu ra (Output)**
+- Node đầu bị xóa, head dịch sang node tiếp theo
+
+### **5. Các bước**
+
+**Bước 1:** Kiểm tra danh sách rỗng
+
+**Bước 2:** Lưu con trỏ node đầu vào temp
+
+**Bước 3:** Cập nhật head trỏ tới node tiếp theo
+
+**Bước 4:** Giải phóng bộ nhớ node cũ
+
+### **6. Ví dụ**
+
+**Input:** head: 1 → 2 → 3
+
+**Output:** head: 2 → 3
+
+### **7. Mã C++**
+
+```cpp
+void deleteHead(Node* &head){
+    if(head == nullptr) return;
+    Node* temp = head;
+    head = head->next;
+    delete temp;
+}
+```
+
+---
+
+## **THUẬT TOÁN 5: XÓA NODE CUỐI DANH SÁCH**
+
+### **1. Tên thuật toán**
+Xóa node cuối danh sách liên kết đơn
+
+### **2. Ý tưởng**
+- Kiểm tra danh sách rỗng hoặc 1 phần tử
+- Duyệt tới node kề cuối
+- Cắt đứt liên kết và xóa node cuối
+
+### **3. Dữ liệu vào (Input)**
+- head: con trỏ tới node đầu
+
+### **4. Dữ liệu ra (Output)**
+- Node cuối bị xóa, danh sách rút ngắn 1 phần tử
+
+### **5. Các bước**
+
+**Bước 1:** Kiểm tra danh sách rỗng
+
+**Bước 2:** Nếu chỉ 1 phần tử, xóa nó và set head = NULL
+
+**Bước 3:** Duyệt tới node kề cuối (current->next->next == NULL)
+
+**Bước 4:** Lưu node cuối vào temp
+
+**Bước 5:** Cắt đứt: current->next = NULL
+
+**Bước 6:** Giải phóng bộ nhớ node cuối
+
+### **6. Ví dụ**
+
+**Input:** head: 1 → 2 → 3
+
+**Output:** head: 1 → 2
+
+### **7. Mã C++**
+
+```cpp
+void deleteTail(Node* &head) {
+    if (head == nullptr) return;
+
+    if (head->next == nullptr) {
+        delete head;
+        head = nullptr;
+        return;
+    }
+
+    Node* current = head;
+    while (current->next->next != nullptr) {
+        current = current->next;
+    }
+
+    Node* temp = current->next;
+    current->next = nullptr;
+    delete temp;
+}
+```
+
+---
+
+## **THUẬT TOÁN 6: XÓA PHẦN TỬ TẠI VỊ TRÍ K**
+
+### **1. Tên thuật toán**
+Xóa node tại vị trí k trong danh sách liên kết đơn
+
+### **2. Ý tưởng**
+- Kiểm tra k hợp lệ
+- Nếu k=1 xóa node đầu
+- Nếu k>1 duyệt tới node (k-1) rồi xóa node kế tiếp
+
+### **3. Dữ liệu vào (Input)**
+- head: con trỏ tới node đầu
+- k: vị trí cần xóa
+
+### **4. Dữ liệu ra (Output)**
+- Node tại vị trí k bị xóa, danh sách được cập nhật
+
+### **5. Các bước**
+
+**Bước 1:** Kiểm tra danh sách rỗng hoặc k < 1
+
+**Bước 2:** Nếu k = 1, xóa node đầu
+
+**Bước 3:** Duyệt tìm node (k-1)
+
+**Bước 4:** Kiểm tra node (k) có tồn tại không
+
+**Bước 5:** Xóa node (k) bằng nối tắt
+
+### **6. Ví dụ**
+
+**Input:** head: 1 → 2 → 3 → 4, k = 2
+
+**Output:** head: 1 → 3 → 4
+
+### **7. Mã C++**
+
+```cpp
+void deleteAt(Node* &head, int k) {
+    if (head == nullptr) return;
+
+    if (k < 1 ){
+        cout << "Vị trí không hợp lệ!";
+        return;
+    }
+
+    if (k == 1) {
+        Node* temp = head;
+        head = head->next;
+        delete temp;
+        return;
+    }
+
+    Node* current = head;
+    int count = 1;
+
+    while (current->next != nullptr && count < k-1) {
+        current = current->next;
+        count++;
+    }
+
+    if (current->next == nullptr){
+        cout << "Vị trí không hợp lệ!";
+        return; 
+    } 
+
+    Node* temp = current->next;
+    current->next = temp->next;
+    delete temp;
+}
+```
+
+---
+
+## **THUẬT TOÁN 7: XÓA TẤT CẢ PHẦN TỬ CÓ GIÁ TRỊ X**
+
+### **1. Tên thuật toán**
+Xóa tất cả node có giá trị x trong danh sách liên kết đơn
+
+### **2. Ý tưởng**
+- Xóa x ở đầu danh sách (có thể nhiều cái liên tiếp)
+- Xóa x ở giữa/cuối bằng duyệt và kiểm tra node kế tiếp
+- Không tăng con trỏ khi xóa để xử lý nhiều x liên tiếp
+
+### **3. Dữ liệu vào (Input)**
+- head: con trỏ tới node đầu
+- x: giá trị cần xóa
+
+### **4. Dữ liệu ra (Output)**
+- Tất cả node có giá trị x bị xóa
+
+### **5. Các bước**
+
+**Bước 1:** Xóa hết x ở đầu danh sách
+
+**Bước 2:** Nếu danh sách rỗng, return
+
+**Bước 3:** Duyệt từ node đầu, kiểm tra node kế tiếp
+
+**Bước 4:** Nếu node kế tiếp = x, xóa nó (không tăng current)
+
+**Bước 5:** Nếu không trùng, dịch current sang node tiếp theo
+
+### **6. Ví dụ**
+
+**Input:** head: 1 → 2 → 2 → 2 → 3, x = 2
+
+**Output:** head: 1 → 3
+
+### **7. Mã C++**
+
+```cpp
+void deleteAllX(Node* &head, int x) {
+    while (head != nullptr && head->data == x) {
+        Node* temp = head;
+        head = head->next;
+        delete temp;
+    }
+
+    if (head == nullptr) return;
+
+    Node* current = head;
+    while (current->next != nullptr) {
+        if (current->next->data == x) {
+            Node* temp = current->next;
+            current->next = temp->next;
+            delete temp;
+        } else {
+            current = current->next;
+        }
+    }
+}
+```
+
+---
+
+# **PHẦN 3: CÁC PHÉP BIẾN ĐỔI (TRANSFORM)**
+
+## **THUẬT TOÁN 8: ĐẢO NGƯỢC DANH SÁCH LIÊN KẾT**
+
+### **1. Tên thuật toán**
+Đảo ngược danh sách liên kết đơn (Reverse Linked List)
+
+### **2. Ý tưởng**
+- Sử dụng 3 con trỏ: prev, current, nextNode
+- Đảo chiều mũi tên của mỗi node
+- Dịch 3 con trỏ sang node tiếp theo
+- Cập nhật head = prev khi kết thúc
+
+### **3. Dữ liệu vào (Input)**
+- head: con trỏ tới node đầu
+
+### **4. Dữ liệu ra (Output)**
+- Danh sách được đảo ngược hoàn toàn
+
+### **5. Các bước**
+
+**Bước 1:** Khởi tạo 3 con trỏ: prev = NULL, current = head, nextNode = NULL
+
+**Bước 2:** Lưu node tiếp theo: nextNode = current->next
+
+**Bước 3:** Quay ngược mũi tên: current->next = prev
+
+**Bước 4:** Dịch 3 con trỏ: prev = current, current = nextNode
+
+**Bước 5:** Lặp lại khi current != NULL
+
+**Bước 6:** Cập nhật head = prev
+
+### **6. Ví dụ**
+
+**Input:** head: 1 → 2 → 3 → 4 → 5
+
+**Output:** head: 5 → 4 → 3 → 2 → 1
+
+### **7. Mã C++**
+
+```cpp
+void reverseList(Node* &head) {
+    Node* prev = nullptr;
+    Node* current = head;
+    Node* nextNode = nullptr;
+
+    while (current != nullptr) {
+        nextNode = current->next;
+        current->next = prev;
+        
+        prev = current;
+        current = nextNode;
+    }
+    
+    head = prev;
+}
+```
+
+---
+
+## **THUẬT TOÁN 9: TÁCH DANH SÁCH THÀNH SỐ CHẴN VÀ LẺ**
+
+### **1. Tên thuật toán**
+Tách danh sách liên kết thành 2 danh sách (chẵn và lẻ)
+
+### **2. Ý tưởng**
+- Duyệt danh sách gốc từng node
+- Lưu node tiếp theo trước khi cắt liên kết
+- Cô lập mỗi node (next = NULL)
+- Phân loại theo chẵn/lẻ và nối vào đuôi danh sách tương ứng
+- Dùng tail pointer để nối O(1)
+
+### **3. Dữ liệu vào (Input)**
+- head: con trỏ tới node đầu danh sách gốc
+
+### **4. Dữ liệu ra (Output)**
+- pEven: danh sách chứa phần tử chẵn
+- pOdd: danh sách chứa phần tử lẻ
+- head: được set = NULL
+
+### **5. Các bước**
+
+**Bước 1:** Khởi tạo pEven, pOdd, tailEven, tailOdd = NULL
+
+**Bước 2:** Lưu node tiếp theo: nextNode = current->next
+
+**Bước 3:** Cô lập node hiện tại: current->next = NULL
+
+**Bước 4:** Nếu data chẵn, nối vào pEven; nếu lẻ nối vào pOdd
+
+**Bước 5:** Dùng tail pointer để cập nhật đuôi danh sách
+
+**Bước 6:** Dịch sang node tiếp theo: current = nextNode
+
+**Bước 7:** Cập nhật head = NULL
+
+### **6. Ví dụ**
+
+**Input:** head: 1 → 2 → 3 → 4 → 5
+
+**Output:** 
+- pEven: 2 → 4 → NULL
+- pOdd: 1 → 3 → 5 → NULL
+
+### **7. Mã C++**
+
+```cpp
+void splitEvenOdd(Node* &head, Node* &pEven, Node* &pOdd) {
+    pEven = NULL; pOdd = NULL;
+    Node* tailEven = NULL; 
+    Node* tailOdd = NULL;
+    
+    Node* current = head;
+    
+    while (current != NULL) {
+        Node* nextNode = current->next;
+        current->next = NULL;
+        
+        if (current->data % 2 == 0) {
+            if (pEven == NULL) {
+                pEven = current;
+                tailEven = current;
+            } else {
+                tailEven->next = current;
+                tailEven = current;
+            }
+        } else {
+            if (pOdd == NULL) {
+                pOdd = current;
+                tailOdd = current;
+            } else {
+                tailOdd->next = current;
+                tailOdd = current;
+            }
+        }
+        
+        current = nextNode;
+    }
+    
+    head = NULL;
+}
+```
+
+---
+
+## **THUẬT TOÁN 10: XÓA CÁC PHẦN TỬ TRÙNG LẶP**
+
+### **1. Tên thuật toán**
+Xóa tất cả phần tử trùng lặp trong danh sách liên kết
+
+### **2. Ý tưởng**
+- Dùng 2 con trỏ lồng nhau: current và runner
+- Current duyệt từng phần tử, runner dò xét các phần tử phía sau
+- Khi tìm thấy trùng, xóa nó mà không tăng runner
+
+### **3. Dữ liệu vào (Input)**
+- head: con trỏ tới node đầu
+
+### **4. Dữ liệu ra (Output)**
+- Tất cả node trùng bị xóa, chỉ giữ lại node đầu tiên
+
+### **5. Các bước**
+
+**Bước 1:** Kiểm tra danh sách rỗng hoặc 1 phần tử
+
+**Bước 2:** Duyệt từng node (current)
+
+**Bước 3:** Với mỗi current, duyệt các node phía sau (runner)
+
+**Bước 4:** Nếu tìm thấy trùng, xóa mà không tăng runner
+
+**Bước 5:** Nếu không trùng, tăng runner sang node tiếp theo
+
+### **6. Ví dụ**
+
+**Input:** head: 1 → 2 → 1 → 2 → 1 → 3
+
+**Output:** head: 1 → 2 → 3
+
+### **7. Mã C++**
+
+```cpp
+void removeDuplicates(Node* head) {
+    if (head == NULL || head->next == NULL) return;
+
+    Node* current = head;
+
+    while (current->next != NULL) {
+        Node* runner = current;
+        
+        while (runner->next != NULL) {
+            if (runner->next->data == current->data) {
+                Node* temp = runner->next;
+                runner->next = temp->next;
+                delete temp;
+            } else {
+                runner = runner->next;
+            }
+        }
+        current = current->next;
+    }
+}
+```
+
+---
+
+## **THUẬT TOÁN 11: KIỂM TRA DANH SÁCH CÓ PHẢI LÀ PALINDROME KHÔNG**
+
+### **1. Tên thuật toán**
+Kiểm tra danh sách liên kết có phải là Palindrome (đối xứng)
+
+### **2. Ý tưởng**
+- **Bước 1:** Tìm điểm giữa bằng phương pháp Rùa-Thỏ (slow/fast pointers)
+- **Bước 2:** Đảo ngược nửa sau
+- **Bước 3:** So sánh nửa trước với nửa sau (đã đảo)
+- **Bước 4:** Khôi phục nửa sau về trạng thái gốc
+
+### **3. Dữ liệu vào (Input)**
+- head: con trỏ tới node đầu
+
+### **4. Dữ liệu ra (Output)**
+- true: nếu danh sách là Palindrome
+- false: nếu không
+
+### **5. Các bước**
+
+**Bước 1:** Kiểm tra rỗng hoặc 1 node → return true
+
+**Bước 2:** Tìm điểm giữa (slow nhảy 1 bước, fast nhảy 2 bước)
+
+**Bước 3:** Đảo ngược nửa sau (từ slow tới cuối)
+
+**Bước 4:** So sánh nửa trước với nửa sau
+
+**Bước 5:** Khôi phục nửa sau bằng đảo ngược lần 2
+
+**Bước 6:** Return kết quả so sánh
+
+### **6. Ví dụ**
+
+**Input:** head: 1 → 2 → 3 → 2 → 1
+
+**Output:** true (là Palindrome)
+
+**Input:** head: 1 → 2 → 3
+
+**Output:** false (không là Palindrome)
+
+### **7. Mã C++**
+
+```cpp
+bool IsPalindrome(Node* head) {
+    if (head == NULL || head->next == NULL) return true;
+
+    // BƯỚC 1: Tìm điểm giữa (Rùa-Thỏ)
+    Node* slow = head;
+    Node* fast = head;
+    
+    while (fast != NULL && fast->next != NULL) {
+        slow = slow->next;
+        fast = fast->next->next;
+    }
+
+    // BƯỚC 2: Đảo ngược nửa sau
+    Node* prev = NULL;
+    Node* curr = slow;
+    Node* nextNode = NULL;
+    Node* secondHalfHead = NULL;
+    
+    while (curr != NULL) {
+        nextNode = curr->next;
+        curr->next = prev;
+        prev = curr;
+        secondHalfHead = prev;
+        curr = nextNode;
+    }
+
+    // BƯỚC 3: So sánh 2 nửa
+    Node* p1 = head;
+    Node* p2 = secondHalfHead;
+    
+    bool isPalin = true;
+    while (p2 != NULL) {
+        if (p1->data != p2->data) {
+            isPalin = false;
+            break;
+        }
+        p1 = p1->next;
+        p2 = p2->next;
+    }
+    
+    // BƯỚC 4: Khôi phục nửa sau (đảo lần 2)
+    prev = NULL;
+    curr = secondHalfHead;
+    
+    while (curr != NULL) {
+        nextNode = curr->next;
+        curr->next = prev;
+        prev = curr;
+        curr = nextNode;
+    }
+    
+    return isPalin;
+}
+```
+
+---
+
+# **PHẦN 4: CÁC PHÉP TÌM KIẾM (SEARCH)**
+
+## **THUẬT TOÁN 12: TÌM GIÁ TRỊ NHỎ NHẤT VÀ LỚN NHẤT**
+
+### **THUẬT TOÁN 12A: TÌM GIÁ TRỊ NHỎ NHẤT**
+
+**1. Tên thuật toán**
+Tìm phần tử có giá trị nhỏ nhất trong danh sách liên kết
+
+**2. Ý tưởng**
+- Khởi tạo minVal = giá trị node đầu
+- Duyệt từ node thứ 2, so sánh từng node với minVal
+- Nếu tìm thấy nhỏ hơn, cập nhật minVal
+
+**3. Dữ liệu vào (Input)**
+- pHead: con trỏ tới node đầu
+
+**4. Dữ liệu ra (Output)**
+- Giá trị nhỏ nhất (int)
+- Nếu danh sách rỗng trả về -1
+
+**5. Các bước**
+
+**Bước 1:** Kiểm tra danh sách rỗng → return -1
+
+**Bước 2:** Khởi tạo minVal = pHead->data
+
+**Bước 3:** Duyệt từ node thứ 2 tới cuối
+
+**Bước 4:** Nếu node.data < minVal → cập nhật minVal
+
+**Bước 5:** Return minVal
+
+**6. Ví dụ**
+
+**Input:** head: 5 → 2 → 8 → 1 → 9
+
+**Output:** 1
+
+**7. Mã C++**
+
+```cpp
+int FindMin(Node* pHead) {
+    if (pHead == NULL) {
+        cout << "Loi: Danh sach rong!" << endl;
+        return -1;
+    }
+
+    int minVal = pHead->data;
+    Node* current = pHead->next;
+
+    while (current != NULL) {
+        if (current->data < minVal) {
+            minVal = current->data;
+        }
+        current = current->next;
+    }
+    
+    return minVal;
+}
+```
+
+---
+
+### **THUẬT TOÁN 12B: TÌM GIÁ TRỊ LỚN NHẤT**
+
+**1. Tên thuật toán**
+Tìm phần tử có giá trị lớn nhất trong danh sách liên kết
+
+**2. Ý tưởng**
+- Khởi tạo maxVal = giá trị node đầu
+- Duyệt từ node thứ 2, so sánh từng node với maxVal
+- Nếu tìm thấy lớn hơn, cập nhật maxVal
+
+**3. Dữ liệu vào (Input)**
+- pHead: con trỏ tới node đầu
+
+**4. Dữ liệu ra (Output)**
+- Giá trị lớn nhất (int)
+- Nếu danh sách rỗng trả về -1
+
+**5. Các bước**
+
+**Bước 1:** Kiểm tra danh sách rỗng → return -1
+
+**Bước 2:** Khởi tạo maxVal = pHead->data
+
+**Bước 3:** Duyệt từ node thứ 2 tới cuối
+
+**Bước 4:** Nếu node.data > maxVal → cập nhật maxVal
+
+**Bước 5:** Return maxVal
+
+**6. Ví dụ**
+
+**Input:** head: 5 → 2 → 8 → 1 → 9
+
+**Output:** 9
+
+**7. Mã C++**
+
+```cpp
+int FindMax(Node* pHead) {
+    if (pHead == NULL) {
+        cout << "Loi: Danh sach rong!" << endl;
+        return -1;
+    }
+
+    int maxVal = pHead->data;
+    Node* current = pHead->next;
+
+    while (current != NULL) {
+        if (current->data > maxVal) {
+            maxVal = current->data;
+        }
+        current = current->next;
+    }
+    
+    return maxVal;
+}
+```
+
+---
+
+# **BẢNG TỔNG HỢP 12 THUẬT TOÁN**
+
+| # | Tên thuật toán | Loại | Ý tưởng chính | Độ khó |
+|---|---|---|---|---|
+| 1 | insertHead | Chèn | Chèn vào đầu | ⭐ |
+| 2 | insertTail | Chèn | Chèn vào cuối | ⭐ |
+| 3 | insertAt | Chèn | Chèn tại vị trí k | ⭐⭐ |
+| 4 | deleteHead | Xóa | Xóa đầu | ⭐ |
+| 5 | deleteTail | Xóa | Xóa cuối | ⭐⭐ |
+| 6 | deleteAt | Xóa | Xóa tại vị trí k | ⭐⭐ |
+| 7 | deleteAllX | Xóa | Xóa tất cả x | ⭐⭐ |
+| 8 | reverseList | Biến đổi | Đảo ngược | ⭐⭐ |
+| 9 | splitEvenOdd | Biến đổi | Tách chẵn/lẻ | ⭐⭐ |
+| 10 | removeDuplicates | Biến đổi | Xóa trùng | ⭐⭐ |
+| 11 | IsPalindrome | Biến đổi | Kiểm tra Palindrome | ⭐⭐⭐ |
+| 12A | FindMin | Tìm kiếm | Tìm min | ⭐ |
+| 12B | FindMax | Tìm kiếm | Tìm max | ⭐ |
+
+---
