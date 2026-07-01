@@ -1,6 +1,4 @@
 # TỔNG HỢP THUẬT TOÁN CÂY NHỊ PHÂN VÀ BST
-## Ôn thi liên thông UIT - Cấu Trúc Dữ Liệu
-
 ---
 
 # **PHẦN 1: CÁC PHÉP DUYỆT CÂY (TRAVERSAL)**
@@ -1167,4 +1165,3 @@ bool isBSTInOrder(Node* root) {
 
 ---
 
-**Chúc bạn thi tốt! 🎉**
