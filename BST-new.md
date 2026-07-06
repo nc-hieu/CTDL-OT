@@ -50,13 +50,15 @@ void LNR(Node* root) {
 
 ### **1. Ý tưởng & Các bước thực hiện**
 
-**Bước 1:** Nếu root == NULL → dừng
+**Bước 1:** Nếu root == NULL → dừng (Điều kiện dừng đệ quy)
 
 **Bước 2:** In root->data ngay lập tức (xử lý gốc trước)
 
-**Bước 3:** Gọi đệ quy sang **trái**: NLR(root->left)
+**Bước 3:** Gọi đệ quy sang **trái**: NLR(root->left) 
+→ Hàm tự lặp lại, đi sâu sang trái cho tới khi gặp NULL, sau đó quay lui
 
 **Bước 4:** Gọi đệ quy sang **phải**: NLR(root->right)
+→ Tương tự, đi sâu sang phải rồi quay lui
 
 > Gốc luôn được xử lý **trước**, thường dùng để **sao chép cây** hoặc **lưu cây vào file**
 
@@ -83,11 +85,13 @@ void NLR(Node* root) {
 
 ### **1. Ý tưởng & Các bước thực hiện**
 
-**Bước 1:** Nếu root == NULL → dừng
+**Bước 1:** Nếu root == NULL → dừng (điều kiện dừng đệ quy)
 
 **Bước 2:** Gọi đệ quy sang **trái**: LRN(root->left)
+→ Hàm tự lặp lại, đi sâu sang trái cho tới khi gặp NULL, sau đó quay lui
 
 **Bước 3:** Gọi đệ quy sang **phải**: LRN(root->right)
+→ Tương tự, đi sâu sang phải rồi quay lui
 
 **Bước 4:** In root->data (xử lý gốc **sau cùng**)
 
