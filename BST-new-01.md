@@ -16,7 +16,7 @@
 **Bước 3:** In root->data (xử lý node hiện tại)
 
 **Bước 4:** Gọi đệ quy sang **phải**: LNR(root->right)
-→ Tương tự, đi sâu sang phải rồi quay lui. Sau bước này, hàm hiện tại kết thúc và quay lui về nút cha cấp cao hơn.
+→ Tương tự, đi sâu sang phải rồi quay lui. **Sau bước này, hàm hiện tại kết thúc và quay lui về nút cha cấp cao hơn**.
 
 > Với BST: luồng đệ quy sẽ in ra dãy **tăng dần** vì luôn xử lý trái (nhỏ hơn) → gốc → phải (lớn hơn)
 
@@ -58,7 +58,7 @@ void LNR(Node* root) {
 → Hàm tự lặp lại, đi sâu sang trái cho tới khi gặp NULL, sau đó quay lui
 
 **Bước 4:** Gọi đệ quy sang **phải**: NLR(root->right)
-→ Tương tự, đi sâu sang phải rồi quay lui. Sau bước này, hàm hiện tại kết thúc và quay lui về nút cha cấp cao hơn.
+→ Tương tự, đi sâu sang phải rồi quay lui. **Sau bước này, hàm hiện tại kết thúc và quay lui về nút cha cấp cao hơn**.
 
 > Gốc luôn được xử lý **trước**, thường dùng để **sao chép cây** hoặc **lưu cây vào file**
 
@@ -91,9 +91,9 @@ void NLR(Node* root) {
 → Hàm tự lặp lại, đi sâu sang trái cho tới khi gặp NULL, sau đó quay lui
 
 **Bước 3:** Gọi đệ quy sang **phải**: LRN(root->right)
-→ Tương tự, đi sâu sang phải rồi quay lui. Sau bước này, hàm hiện tại kết thúc và quay lui về nút cha cấp cao hơn.
+→ Tương tự, đi sâu sang phải rồi quay lui. 
 
-**Bước 4:** In root->data (xử lý gốc **sau cùng**)
+**Bước 4:** In root->data (xử lý gốc **sau cùng**). **Sau bước này, hàm hiện tại kết thúc và quay lui về nút cha cấp cao hơn**.
 
 > Gốc luôn được xử lý **sau** khi 2 nhánh con xong, thường dùng để **xóa cây** (phải xóa con trước, cha sau)
 
