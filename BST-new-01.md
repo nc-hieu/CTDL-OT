@@ -8,7 +8,7 @@
 
 ### **1. Ý tưởng & Các bước thực hiện**
 
-**Bước 1:** Nếu root == NULL → dừng (điều kiện dừng đệ quy)
+**Bước 1:** Kiểm tra, nếu root == NULL thì cây con rỗng, không có gì để duyệt → dừng (điều kiện dừng đệ quy)
 
 **Bước 2:** Gọi đệ quy sang **trái**: LNR(root->left)
 → Hàm tự lặp lại, đi sâu sang trái cho tới khi gặp NULL, sau đó quay lui
@@ -16,7 +16,7 @@
 **Bước 3:** In root->data (xử lý node hiện tại)
 
 **Bước 4:** Gọi đệ quy sang **phải**: LNR(root->right)
-→ Tương tự, đi sâu sang phải rồi quay lui
+→ Tương tự, đi sâu sang phải rồi quay lui. Sau bước này, hàm hiện tại kết thúc và quay lui về nút cha cấp cao hơn.
 
 > Với BST: luồng đệ quy sẽ in ra dãy **tăng dần** vì luôn xử lý trái (nhỏ hơn) → gốc → phải (lớn hơn)
 
@@ -50,7 +50,7 @@ void LNR(Node* root) {
 
 ### **1. Ý tưởng & Các bước thực hiện**
 
-**Bước 1:** Nếu root == NULL → dừng (Điều kiện dừng đệ quy)
+**Bước 1:** Nếu root == NULL thì cây con rỗng, không có gì để duyệt → dừng (điều kiện dừng đệ quy)
 
 **Bước 2:** In root->data ngay lập tức (xử lý gốc trước)
 
@@ -58,7 +58,7 @@ void LNR(Node* root) {
 → Hàm tự lặp lại, đi sâu sang trái cho tới khi gặp NULL, sau đó quay lui
 
 **Bước 4:** Gọi đệ quy sang **phải**: NLR(root->right)
-→ Tương tự, đi sâu sang phải rồi quay lui
+→ Tương tự, đi sâu sang phải rồi quay lui. Sau bước này, hàm hiện tại kết thúc và quay lui về nút cha cấp cao hơn.
 
 > Gốc luôn được xử lý **trước**, thường dùng để **sao chép cây** hoặc **lưu cây vào file**
 
@@ -85,13 +85,13 @@ void NLR(Node* root) {
 
 ### **1. Ý tưởng & Các bước thực hiện**
 
-**Bước 1:** Nếu root == NULL → dừng (điều kiện dừng đệ quy)
+**Bước 1:** Nếu root == NULL thì cây con rỗng, không có gì để duyệt → dừng (điều kiện dừng đệ quy)
 
 **Bước 2:** Gọi đệ quy sang **trái**: LRN(root->left)
 → Hàm tự lặp lại, đi sâu sang trái cho tới khi gặp NULL, sau đó quay lui
 
 **Bước 3:** Gọi đệ quy sang **phải**: LRN(root->right)
-→ Tương tự, đi sâu sang phải rồi quay lui
+→ Tương tự, đi sâu sang phải rồi quay lui. Sau bước này, hàm hiện tại kết thúc và quay lui về nút cha cấp cao hơn.
 
 **Bước 4:** In root->data (xử lý gốc **sau cùng**)
 
